@@ -7,6 +7,12 @@ const AddressSchema = mongoose.Schema(
       required: true,
     },
 
+    userName:
+    {
+      type : String,
+      required : true
+    },
+    
     phoneNumber: {
       type: String,
       required: true,

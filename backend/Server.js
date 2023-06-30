@@ -4,6 +4,8 @@ import dotenv from "dotenv";
 import databaseconnection from "./database.js";
 import mongoose from "mongoose";
 import UserRoutes from "./Routes/Common/User/UserRoutes.js";
+import RestaurantRoutes from "./Routes/Admin/Restaurant/RestaurantRoutes.js";
+import AddressRoute from './Routes/Common/Address/AddressRoute.js'
 
 const app = express();
 
@@ -27,10 +29,12 @@ db.once("open", () => {
 
 // -------- Common Routes --------
 app.use("/", UserRoutes);
+app.use("/" , AddressRoute)
 
 // -------------------------------
 
 // ------ Admin Routes ------------
+app.use("/admin", RestaurantRoutes);
 // -------------------------------
 app.get("/", (req, res) => {
   res.send("Hello World, This is swiggy clone backend...");

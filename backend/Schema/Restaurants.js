@@ -7,6 +7,11 @@ const RestaurantSchema = mongoose.Schema(
       default: Date.now,
     },
 
+    adminId: {
+      type: String,
+      required: true,
+    },
+
     name: {
       type: String,
       required: true,
@@ -22,7 +27,7 @@ const RestaurantSchema = mongoose.Schema(
       required: true,
     },
 
-    restaurantImage: {
+    Image: {
       type: String,
       required: true,
       default: "https://unsplash.com/photos/poI7DelFiVA",
@@ -40,7 +45,7 @@ const RestaurantSchema = mongoose.Schema(
       type: String,
     },
 
-    PhoneNumber: {
+    phoneNumber: {
       type: String,
       required: true,
     },
@@ -69,6 +74,7 @@ const RestaurantSchema = mongoose.Schema(
     isVegetarian: {
       type: Boolean,
       required: true,
+      default: true,
     },
 
     isNonVegetarian: {
@@ -91,10 +97,12 @@ const RestaurantSchema = mongoose.Schema(
 
     dishes: {
       type: [String],
-      required: true,
     },
 
-    ratings: Number,
+    ratings: {
+      type: Number,
+    },
+
     totalRating: {
       type: [String],
     },
