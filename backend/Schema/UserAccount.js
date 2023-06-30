@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import bcrypt from "bcryptjs";
 
 const UserAccountSchema = mongoose.Schema(
   {
@@ -6,6 +7,13 @@ const UserAccountSchema = mongoose.Schema(
       type: String,
       required: true,
     },
+
+    isAdmin: {
+      type: Boolean,
+      required: true,
+      default: false,
+    },
+
     phoneNumber: {
       type: String,
       required: true,
@@ -16,22 +24,18 @@ const UserAccountSchema = mongoose.Schema(
     },
     address: {
       type: [String],
-      required: true,
     },
 
     city: {
       type: String,
-      required: true,
     },
 
     state: {
       type: String,
-      required: true,
     },
 
     pastOrders: {
       type: [String],
-      required: true,
     },
 
     password: {
@@ -41,13 +45,11 @@ const UserAccountSchema = mongoose.Schema(
 
     latitude: {
       type: String,
-      required: true,
       default: "00.000",
     },
 
     longitude: {
       type: String,
-      required: true,
       default: "00.000",
     },
 
@@ -64,6 +66,16 @@ const UserAccountSchema = mongoose.Schema(
   }
 );
 
-const UserAccount = mongoose.model("UserAccount", UserAccountSchema);
+UserAccountSchema.pre("save", async function (next) {
+  const salt = await bcrypt.genSalt(10);
+  this.password = await bcrypt.hash(this.password, salt);
+  next();
+});
+
+UserAccountSchema.methods.ComparePassword = async function (EnteredPassword) {
+  return await bcrypt.compare(EnteredPassword, this.password);
+};
+
+const UserAccount = mongoose.model("UserAccounts", UserAccountSchema);
 
 export default UserAccount;
