@@ -1,5 +1,9 @@
 import RestaurantSchema from "../../../Schema/Restaurants.js";
 import UserSchema from "../../../Schema/UserAccount.js";
+import {
+  RestaurantImageUpload,
+  RestaurantImageUploadPath,
+} from "../../../Middleware/RestaurantMiddleware.js";
 
 const registerNewRestaurant = async (req, res) => {
   const {
@@ -17,6 +21,7 @@ const registerNewRestaurant = async (req, res) => {
   } = req.body;
 
   try {
+    await RestaurantImageUpload(state, city, name, category);
     const isUserAdmin = await UserSchema.findById(req.user);
     if (!isUserAdmin.isAdmin) {
       return res.status(403).json({ errorMessage: "Permission Forbidden!!" });
@@ -34,6 +39,7 @@ const registerNewRestaurant = async (req, res) => {
         email,
         openAt,
         closeAt,
+        Image: await RestaurantImageUploadPath(),
       });
 
       if (newRestaurant) {

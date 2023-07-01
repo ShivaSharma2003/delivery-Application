@@ -10,6 +10,13 @@ const DishSchema = mongoose.Schema(
       type: String,
       required: true,
     },
+
+    image: {
+      type: String,
+      require: true,
+      default: "https://unsplash.com/photos/fnztlIb52gU",
+    },
+
     amount: {
       type: Number,
       required: true,
