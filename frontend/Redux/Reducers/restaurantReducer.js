@@ -1,7 +1,7 @@
 import * as restaurant from "../Constant/restaurantsConstant";
 
 export const fetchRestaurantsReducer = (
-  state = { restuarant: {}, success: false, loading: false },
+  state = { restuarant: [], success: false, loading: false },
   action
 ) => {
   switch (action.type) {

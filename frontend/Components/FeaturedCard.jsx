@@ -1,14 +1,16 @@
 import { View, Text, ScrollView } from "react-native";
-import React from "react";
+import React, { useEffect } from "react";
 import { ArrowRight } from "@nandorojo/heroicons/24/outline";
 import FeaturedRestaurantCard from "./FeaturedRestaurantCard";
 import FoodPic from "../assets/Food-1.jpg";
 import { useSelector } from "react-redux";
 
 export default function FeaturedCard({ title, description, id }) {
-  const { laoding, error, restuarant, success } = useSelector(
+  const { restuarant, isLoading, isError, success } = useSelector(
     (state) => state.Restaurants
   );
+
+  console.log(restuarant);
 
   return (
     <View className="mb-4 py-2 px-4  border border-1 border-gray-300 rounded-2xl ">
@@ -20,11 +22,16 @@ export default function FeaturedCard({ title, description, id }) {
         </View>
       </View>
       <ScrollView horizontal className="my-2 px-2">
-        <FeaturedRestaurantCard
-          title={"Rajasthan Food Bhandar"}
-          id={2353344}
-          url={FoodPic}
-        />
+        {restuarant?.map((restaurant) => {
+          return (
+            <FeaturedRestaurantCard
+              key={restaurant._id}
+              title={"Rajasthan Food Bhandar"}
+              id={2353344}
+              url={FoodPic}
+            />
+          );
+        })}
       </ScrollView>
     </View>
   );
