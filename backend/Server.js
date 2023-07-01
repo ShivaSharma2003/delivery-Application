@@ -3,15 +3,16 @@ import cors from "cors";
 import dotenv from "dotenv";
 import databaseconnection from "./database.js";
 import mongoose from "mongoose";
-import UserRoutes from "./Routes/Common/User/UserRoutes.js";
+import UserCommonRoutes from "./Routes/Common/User/UserRoutes.js";
 import RestaurantRoutes from "./Routes/Admin/Restaurant/RestaurantRoutes.js";
-import AddressRoute from "./Routes/Common/Address/AddressRoute.js";
+import AddressCommonRoute from "./Routes/Common/Address/AddressRoute.js";
 import DishRoute from "./Routes/Admin/Dish/DishRoutes.js";
+import RestaurantCommonRoute from "./Routes/Common/Restaurant/RestaurantRoute.js";
 
 const app = express();
 
 dotenv.config();
-cors();
+app.use(cors());
 app.use(express.json());
 
 // --------- Database Connection ----------------
@@ -29,8 +30,9 @@ db.once("open", () => {
 // ------------------------------------------------
 
 // -------- Common Routes --------
-app.use("/", UserRoutes);
-app.use("/", AddressRoute);
+app.use("/", UserCommonRoutes);
+app.use("/", AddressCommonRoute);
+app.use("/", RestaurantCommonRoute);
 
 // -------------------------------
 
